@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad-ka Casriga Ah</title>
+    <style>
+        /* CSS: Naqshadda iyo Qurxinta */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .notepad-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        textarea {
+            width: 100%;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+            font-size: 17px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        textarea:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #00d2ff;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s ease;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        .btn-save {
+            background: #00d2ff;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-save:hover {
+            background: #3a7bd5;
+            transform: translateY(-2px);
+        }
+
+        .btn-clear {
+            background: rgba(255, 75, 75, 0.2);
+            color: #ff4b4b;
+            border: 1px solid #ff4b4b;
+        }
+
+        .btn-clear:hover {
+            background: #ff4b4b;
+            color: #fff;
+        }
+
+        #msg {
+            text-align: center;
+            color: #00d2ff;
+            margin-top: 15px;
+            font-size: 14px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="notepad-box">
+        <h2>NOTEPAD</h2>
+        <textarea id="textInput" placeholder="Halkan wax ku qor..."></textarea>
+        
+        <div class="controls">
+            <button class="btn-clear" onclick="clearText()">Tirtir</button>
+            <button class="btn-save" onclick="saveText()">Kaydi Qoraalka</button>
+        </div>
+
+        <p id="msg"></p>
+    </div>
+
+    <script>
+        // JavaScript: Shaqada kaydinta iyo soo celinta
+        const textInput = document.getElementById('textInput');
+        const msg = document.getElementById('msg');
+
+        // 1. Marka bogga la furo, soo saar wixii horay u kaydsanaa
+        window.onload = () => {
+            const savedData = localStorage.getItem('myCoolNote');
+            if (savedData) {
+                textInput.value = savedData;
+            }
+        };
+
+        // 2. Shaqada Kaydinta (Save)
+        function saveText() {
+            localStorage.setItem('myCoolNote', textInput.value);
+            msg.innerText = "Si guul leh ayaa loo kaydiyay! ✓";
+            
+            setTimeout(() => {
+                msg.innerText = "";
+            }, 3000);
+        }
+
+        // 3. Shaqada Tirtirista (Clear)
+        function clearText() {
+            if (confirm("Ma hubtaa inaad tirtirayso wax kasta?")) {
+                textInput.value = "";
+                localStorage.removeItem('myCoolNote');
+                msg.innerText = "Waa la tirtiray.";
+                msg.style.color = "#ff4b4b";
+                
+                setTimeout(() => {
+                    msg.innerText = "";
+                    msg.style.color = "#00d2ff";
+                }, 3000);
+            }
+        }
+    </script>
+
+</body>
+</html>

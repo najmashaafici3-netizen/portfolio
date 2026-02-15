@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Black Calculator</title>
+  <style>
+    body{
+      margin:0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      background:#000;
+      font-family:Arial, Helvetica, sans-serif;
+    }.calculator{
+  width:300px;
+  background:#111;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(255,0,0,0.4);
+}
+
+#display{
+  width:100%;
+  height:70px;
+  background:#000;
+  color:#0f0;
+  border:none;
+  border-radius:10px;
+  font-size:28px;
+  text-align:right;
+  padding:10px;
+  margin-bottom:15px;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+button{
+  height:55px;
+  border:none;
+  border-radius:12px;
+  font-size:20px;
+  cursor:pointer;
+  background:#222;
+  color:white;
+  transition:0.2s;
+}
+
+button:hover{
+  opacity:0.8;
+}
+
+.num{
+  background:#1f2933;
+}
+
+.op{
+  background:#b91c1c; /* red */
+}
+
+.clear{
+  background:#dc2626;
+}
+
+.equal{
+  background:#16a34a;
+  grid-column:span 2;
+  font-size:22px;
+}
+
+  </style>
+</head>
+<body>  <div class="calculator"><input type="text" id="display" readonly>
+
+<div class="buttons">
+
+  <button class="clear" onclick="clearAll()">C</button>
+  <button class="op" onclick="percent()">%</button>
+  <button class="op" onclick="del()">DEL</button>
+  <button class="op" onclick="addOp('/')">÷</button>
+
+  <button class="num" onclick="addNum('7')">7</button>
+  <button class="num" onclick="addNum('8')">8</button>
+  <button class="num" onclick="addNum('9')">9</button>
+  <button class="op" onclick="addOp('*')">×</button>
+
+  <button class="num" onclick="addNum('4')">4</button>
+  <button class="num" onclick="addNum('5')">5</button>
+  <button class="num" onclick="addNum('6')">6</button>
+  <button class="op" onclick="addOp('-')">−</button>
+
+  <button class="num" onclick="addNum('1')">1</button>
+  <button class="num" onclick="addNum('2')">2</button>
+  <button class="num" onclick="addNum('3')">3</button>
+  <button class="op" onclick="addOp('+')">+</button>
+
+  <button class="num" onclick="addNum('0')">0</button>
+  <button class="num" onclick="addNum('.')">.</button>
+  <button class="equal" onclick="calc()">=</button>
+
+</div>
+
+  </div>  <script>
+    const display = document.getElementById("display");
+
+    let current = "";
+
+    function addNum(num){
+      current += num;
+      display.value = current;
+    }
+
+    function addOp(op){
+      if(current === "") return;
+
+      const last = current.slice(-1);
+
+      if("+-*/".includes(last)){
+        current = current.slice(0,-1) + op;
+      }else{
+        current += op;
+      }
+
+      display.value = current;
+    }
+
+    function clearAll(){
+      current = "";
+      display.value = "";
+    }
+
+    function del(){
+      current = current.slice(0,-1);
+      display.value = current;
+    }
+
+    function percent(){
+      if(current === "") return;
+      try{
+        current = (eval(current)/100).toString();
+        display.value = current;
+      }catch{
+        display.value = "Error";
+        current = "";
+      }
+    }
+
+    function calc(){
+      if(current === "") return;
+
+      try{
+        let result = eval(current);
+        display.value = result;
+        current = result.toString();
+      }catch{
+        display.value = "Error";
+        current = "";
+      }
+    }
+  </script></body>
+</html>
